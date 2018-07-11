@@ -6,7 +6,7 @@
 #
 # The program uses Text::CSV_XS to parse the CSV.
 # First string, this title of columns, for set filter on column
-# Title suffix: "-" align left, "+" align center, "=" align right
+# Title suffix: "=" align left, "+" align center, "-" align right
 # Max width Column is bigger of: $cell_max_width OR $word_max_width
 # Shrink width Column by max width of phrase placed in Max width Column
 #
@@ -101,9 +101,9 @@ while (<CSVFILE>) {
 		$col_align[ $col ] = "";
 		if ( length($token) >= 1 ) {
 		    my $char = substr( $token, -1, 1 );
-		    if ( $char eq "-" ) { $col_align[ $col ] = "left"; $token = substr( $token, 0, (length($token)-1) ); }
+		    if ( $char eq "=" ) { $col_align[ $col ] = "left"; $token = substr( $token, 0, (length($token)-1) ); }
 		    if ( $char eq "+" ) { $col_align[ $col ] = "center"; $token = substr( $token, 0, (length($token)-1) ); }
-		    if ( $char eq "=" ) { $col_align[ $col ] = "right"; $token = substr( $token, 0, (length($token)-1) ); }
+		    if ( $char eq "-" ) { $col_align[ $col ] = "right"; $token = substr( $token, 0, (length($token)-1) ); }
 		}
     	    }
 	    my $len = length( $token ) + 2; # add 1 char at left and right sidies
@@ -186,7 +186,7 @@ while (<CSVFILE>) {
             if ( $row == 0 ) {
 		if ( length($token) >= 1 ) {
 		    my $char = substr( $token, -1, 1 );
-		    if ( $char eq "-" || $char eq "+" || $char eq "=" ) { $token = substr( $token, 0, (length($token)-1) ); }
+		    if ( $char eq "=" || $char eq "+" || $char eq "-" ) { $token = substr( $token, 0, (length($token)-1) ); }
 		}
         	$worksheet->write_string( $row, $col, $token, $format_hdr );
             } else { 
